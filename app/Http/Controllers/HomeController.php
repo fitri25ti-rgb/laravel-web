@@ -4,14 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class MahasiswaController extends Controller
+class HomeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        /* Cara 1 */
+        $data['username']        = 'Heroku';
+        $data['last_login']      = date('Y-m-d H:i:s');
+        $data['list_pendidikan'] = ['SD', 'SMP', 'SMA', 'S1', 'S2', 'S3'];
+        
+        return view('home', $data);
     }
 
     /**
@@ -19,7 +24,8 @@ class MahasiswaController extends Controller
      */
     public function create()
     {
-        //
+        // Kembalikan ke halaman view
+        return view('home'); 
     }
 
     /**
@@ -33,14 +39,10 @@ class MahasiswaController extends Controller
     /**
      * Display the specified resource.
      */
-  public function show(string $param1)
-{
-    if($param1 == 'detail'){
-        return view('halaman-mahasiswa-detail');
-    }else if($param1 == 'profil'){
-        return view('halaman-mahasiswa-profil');
+    public function show(string $id)
+    {
+        //
     }
-}
 
     /**
      * Show the form for editing the specified resource.
@@ -65,4 +67,4 @@ class MahasiswaController extends Controller
     {
         //
     }
-}
+} // <-- INI PENUTUP CLASS YANG BENAR (Hanya ada satu di paling bawah)

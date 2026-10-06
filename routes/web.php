@@ -1,35 +1,23 @@
 <?php
 
-use App\Http\Controllers\MahasiswaController; // 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController; // <-- TAMBAHAN IMPORT
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
+// Route bawaan Laravel
 Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::get('/pcr', function () {
-    return 'Selamat Datang di Website Kampus PCR!';
-});
-
-Route::get('/mahasiswa', function () {
-    return 'Halo Mahasiswa';
-});
-
-Route::get('/nama/{param}', function ($param) {
-    return 'Nama saya: '.$param;
-});
-
-Route::get('/nim/{param1?}', function ($param1 = '') {
-    return 'NIM saya: '.$param1;
-});
-
-Route::get('/mahasiswa', function () {
-    return 'Halo Mahasiswa';
-})->name('mahasiswa.show');
-
-Route::get('/mahasiswa/{param}', [MahasiswaController::class, 'show']);
-
-Route::get('/about', function () {
-    return view('halaman-about');
-});
+// Route untuk tugas Passing Data Laravel
+Route::get('/home', [HomeController::class, 'index']);
