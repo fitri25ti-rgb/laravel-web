@@ -1,17 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController; // <-- TAMBAHAN IMPORT
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\QuestionController; // <-- 1. TAMBAHKAN IMPORT INI
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
 */
 
 // Route bawaan Laravel
@@ -21,3 +17,13 @@ Route::get('/', function () {
 
 // Route untuk tugas Passing Data Laravel
 Route::get('/home', [HomeController::class, 'index']);
+
+// ===== TAMBAHAN DARI MATERI ANDA =====
+
+// 2. Route untuk Form Login / AJAX (dari pertemuan sebelumnya)
+// Ini menangani action="auth/login" di form HTML Anda
+Route::post('/auth/login', [HomeController::class, 'login']); 
+
+// 3. Route untuk QuestionController (Langkah No. 2 di gambar materi)
+Route::post('question/store', [QuestionController::class, 'store'])
+    ->name('question.store');

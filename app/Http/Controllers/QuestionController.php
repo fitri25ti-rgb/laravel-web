@@ -4,27 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class QuestionController extends Controller
 {
-    public function login(Request $request)
-    {
-        // semua data form
-        dd($request->all()); // dd = dump and die (untuk melihat isi data)
-
-        // ambil spesifik input (kode di bawah dd() tidak akan jalan karena dd() menghentikan program)
-        $username = $request->input('username');
-        $password = $request->input('password');
-    }
-    // <-- HAPUS TANDA '}' DI SINI (Baris 17 di kode Anda)
-
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        /* Cara 1 */
-        $data['username']        = 'Heroku';
-        $data['last_login']      = date('Y-m-d H:i:s');
-        $data['list_pendidikan'] = ['SD', 'SMP', 'SMA', 'S1', 'S2', 'S3'];
-        
-        return view('home', $data);
+        //
     }
 
     /**
@@ -32,8 +19,7 @@ class HomeController extends Controller
      */
     public function create()
     {
-        // Kembalikan ke halaman view
-        return view('home'); 
+        //
     }
 
     /**
@@ -41,7 +27,7 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all()); 
     }
 
     /**
@@ -75,4 +61,4 @@ class HomeController extends Controller
     {
         //
     }
-} // <-- INI PENUTUP CLASS YANG BENAR (Hanya ada satu di paling bawah)
+}

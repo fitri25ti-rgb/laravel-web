@@ -20,6 +20,14 @@
         @endif
     </head>
     <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
+   
+    <form action="auth/login" method="POST">
+            <input type="text" name="username">
+            <input type="password" name="password">
+            <button type="submit">Submit</button>
+        </form> 
+        
+        
         <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
             @if (Route::has('login'))
                 <nav class="flex items-center justify-end gap-4">
@@ -275,5 +283,26 @@
         @if (Route::has('login'))
             <div class="h-14.5 hidden lg:block"></div>
         @endif
+
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script>
+            $.ajax({
+                url: 'auth/login',
+                method: 'POST',
+                data: {
+                    username: 'john',
+                    password: '12345',
+                    _token: '{{ csrf_token() }}' // WAJIB ditambahkan untuk Laravel
+                },
+                success: function(response) {
+                    console.log('Data submitted successfully');
+                    console.log(response);
+                },
+                error: function(xhr, status, error) {
+                    console.log('Error occurred: ' + error);
+                }
+            });
+        </script>
+        
     </body>
 </html>
