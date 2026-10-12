@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\View
 
-class QuestionController extends Controller
+lass QuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,6 +29,12 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+		    'nama'  => 'required|max:10',
+		    'email' => ['required','email'],
+		    'pertanyaan' => 'required|max:300|min:8',
+		]);
+
         // dd($request->all()); 
         $data['nama'] = $request->nama;
         $data['email'] = $request->email;

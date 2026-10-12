@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\QuestionController; // <-- 1. TAMBAHKAN IMPORT INI
@@ -27,3 +28,6 @@ Route::post('/auth/login', [HomeController::class, 'login']);
 // 3. Route untuk QuestionController (Langkah No. 2 di gambar materi)
 Route::post('question/store', [QuestionController::class, 'store'])
     ->name('question.store');
+
+Route::get('/post/create', [PostController::class, 'create']);
+Route::post('/post', [PostController::class, 'store']);
