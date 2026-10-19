@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <title>Terima Kasih</title>
@@ -42,28 +42,39 @@
             background-color: #3E97FF;
             border: none;
         }
+        .btn-primary:hover {
+            background-color: #2b83ef;
+        }
     </style>
 </head>
 <body>
 
     <div class="thankyou-container">
+        @php
+            // Mendapatkan data dari Session (jika pakai redirect) atau dari Variabel biasa
+            $namaUser = session('data.nama') ?? $nama ?? 'Pengunjung';
+            $pertanyaanUser = session('data.pertanyaan') ?? $pertanyaan ?? '-';
+            $emailUser = session('data.email') ?? $email ?? '-';
+        @endphp
+
         <!-- 1. NAMA USER DITAMPILKAN DI SINI -->
-        <h2>Terima Kasih, {{ $nama }}! 🎉</h2>
+        <h2>Terima Kasih, {{ $namaUser }}! 🎉</h2>
         <p class="lead">Pertanyaan Anda telah berhasil dikirim.</p>
 
         <blockquote>
             <strong>Pertanyaan Anda:</strong><br>
             <!-- 2. PERTANYAAN USER DITAMPILKAN DI SINI -->
-            "{{ $pertanyaan }}"
+            "{{ $pertanyaanUser }}"
         </blockquote>
 
         <p class="email-info mt-4">
             <!-- 3. EMAIL USER DITAMPILKAN DI SINI -->
-            Pertanyaan Anda akan segera kami tanggapi dan balas melalui email <strong>{{ $email }}</strong>.<br><br>
+            Pertanyaan Anda akan segera kami tanggapi dan balas melalui email <strong>{{ $emailUser }}</strong>.<br><br>
             Mohon cek kotak masuk atau folder spam Anda secara berkala.
         </p>
 
-        <a href="{{ url('/') }}" class="btn btn-primary mt-4">Kembali ke Beranda</a>
+        <!-- Menyesuaikan tombol kembali ke halaman form/beranda -->
+        <a href="{{ url()->previous() }}" class="btn btn-primary mt-4 px-4 py-2">Kembali ke Form</a>
     </div>
 
 </body>

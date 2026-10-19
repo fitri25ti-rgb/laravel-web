@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
@@ -7,10 +7,12 @@
     <title>My Laravel App</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <!-- Custom CSS -->
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
         }
 
         .navbar-brand {
@@ -18,7 +20,7 @@
         }
 
         .navbar {
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
         .hero-section {
@@ -33,14 +35,15 @@
         }
 
         .card {
-            margin-top: 30px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
         }
 
         .footer {
             margin-top: 50px;
             padding: 20px 0;
-            background-color: #f8f9fa;
+            background-color: #ffffff;
+            border-top: 1px solid #dee2e6;
             text-align: center;
         }
 
@@ -54,16 +57,16 @@
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container">
             <a class="navbar-brand" href="#">My Laravel App</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" href="#">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Features</a>
@@ -79,43 +82,74 @@
         </div>
     </nav>
 
-<div class="card">
-    <div class="card-body">
-    <h5 class="card-title">Form Pertanyaan</h5>
-<form action="{{ route('question.store') }}" method="POST">
-    @csrf
-    <div class="mb-3">
-             <label for="nama" class="form-label">Nama</label>
-            <input type="text" name="nama" class="form-control">
+    <!-- Section Form Pertanyaan -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="card border-0">
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-bold mb-3">Form Pertanyaan</h5>
+
+                        <!-- Alert Respon Sesuai Tugas Dosen -->
+                        @php
+                            $respon = session('responData') ?? session('data');
+                        @endphp
+
+                        @if($respon)
+                            <div class="alert alert-info border-0 rounded-3 my-3 p-3" style="background-color: #d1f2f9; color: #0c5460;">
+                                Terimakasi <strong>{{ $respon['nama'] }}</strong>! Pertanyaan ini: <strong>{{ $respon['pertanyaan'] }}</strong> akan segera direspon melalui email <strong>{{ $respon['email'] }}</strong>
+                            </div>
+                        @endif
+
+                        <form action="{{ route('question.store') }}" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Nama</label>
+                                <input type="text" name="nama" id="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}">
+                                @error('nama')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="text" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}">
+                                @error('email')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="pertanyaan" class="form-label">Pertanyaan</label>
+                                <textarea name="pertanyaan" id="pertanyaan" class="form-control @error('pertanyaan') is-invalid @enderror" rows="4">{{ old('pertanyaan') }}</textarea>
+                                @error('pertanyaan')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <button type="submit" class="btn btn-primary fw-semibold px-4">Kirim Pertanyaan</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="text" name="email" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label for="pertanyaan" class="form-label">Pertanyaan</label>
-                <textarea name="pertanyaan" class="form-control" rows="4"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Kirim Pertanyaan</button>
-        </form>
+        </div>
     </div>
-</div>
 
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
-           <h1> {{ $username }} </h1>
-<p> {{ $last_login }} </p>
+            <h1>{{ $username ?? 'Heroku' }}</h1>
+            <p>{{ $last_login ?? date('Y-m-d H:i:s') }}</p>
             <p class="lead mb-0">A simple and elegant app using Bootstrap 5 and Laravel Blade.</p>
         </div>
     </section>
 
     <!-- Content Section -->
-    <section id="content" class="container ">
+    <section id="content" class="container my-5">
         <div class="row">
             <div class="col-md-6">
-                {{-- About --}}
-                <div class="card mb-4">
+                <!-- About -->
+                <div class="card mb-4 border-0">
                     <div class="card-body">
                         <h5 class="card-title">About Our Application</h5>
                         <p class="card-text">Our application provides a clean and intuitive interface, allowing users to navigate easily and perform tasks efficiently. Built with Laravel and Bootstrap, it offers flexibility and responsiveness.</p>
@@ -124,7 +158,7 @@
                 </div>
 
                 <!-- Accordion -->
-                <div class="accordion" id="accordionExample">
+                <div class="accordion mb-4" id="accordionExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
@@ -151,8 +185,8 @@
                     </div>
                 </div>
 
-                {{-- Badge, List & Card --}}
-                <div class="card">
+                <!-- Badge, List & Card -->
+                <div class="card border-0 mb-4">
                     <div class="card-body">
                         <h3 class="h5 mb-3">Badges, List, &amp; Card</h3>
                         <div class="mb-3">
@@ -168,16 +202,13 @@
                         <div class="p-3 border rounded">
                             <strong>Div umum</strong> — ini hanya <em>container</em> untuk konten bebas.
                         </div>
-                        <p class="text-muted small mt-3 mb-0">
-                            Gunakan <code>.card</code> untuk konten yang butuh border & sedikit efek shadow.
-                        </p>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-6">
-                {{-- Alerts --}}
-                <div class="card ">
+                <!-- Alerts -->
+                <div class="card border-0 mb-4">
                     <div class="card-body">
                         <h3 class="h5 mb-3">Alerts</h3>
                         <div class="alert alert-primary mb-2">Informational alert</div>
@@ -187,8 +218,8 @@
                     </div>
                 </div>
 
-                {{-- Buttons --}}
-                <div class="card">
+                <!-- Buttons -->
+                <div class="card border-0 mb-4">
                     <div class="card-body">
                         <h3 class="h5 mb-3">Buttons</h3>
                         <div class="d-flex flex-wrap gap-2">
@@ -201,8 +232,8 @@
                     </div>
                 </div>
 
-                {{-- Table --}}
-                <div class="card">
+                <!-- Table -->
+                <div class="card border-0 mb-4">
                     <div class="card-body">
                         <h3 class="h5 mb-3">Table</h3>
                         <div class="table-responsive">
@@ -237,7 +268,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        <p class="text-muted small mb-0">Tambahkan <code>.table-striped</code> atau <code>.table-bordered</code> sesuai kebutuhan.</p>
                     </div>
                 </div>
             </div>
@@ -247,7 +277,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; {{date('Y')}} My Laravel App. All Rights Reserved.</p>
+            <p>&copy; {{ date('Y') }} My Laravel App. All Rights Reserved.</p>
         </div>
     </footer>
 
