@@ -3,7 +3,8 @@
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\QuestionController; // <-- 1. TAMBAHKAN IMPORT INI
+use App\Http\Controllers\QuestionController; 
+use App\Http\Controllers\DashboardController;// <-- 1. TAMBAHKAN IMPORT INI
 
 /*
 |--------------------------------------------------------------------------
@@ -31,3 +32,7 @@ Route::post('question/store', [QuestionController::class, 'store'])
 
 Route::get('/post/create', [PostController::class, 'create']);
 Route::post('/post', [PostController::class, 'store']);
+//pelanggan
+//Route::resource('pelanggan', PelangganController::class);
+
+Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
