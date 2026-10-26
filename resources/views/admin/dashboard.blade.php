@@ -110,6 +110,7 @@
 						</span>
 						<span class="sidebar-text">Dashboard</span>
 					</a>
+					
 				</li>
 				<li class="nav-item">
 					<a href="https://demo.themesberg.com/volt-pro/pages/kanban.html" target="_blank"
