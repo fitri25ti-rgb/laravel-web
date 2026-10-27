@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\QuestionController; 
 use App\Http\Controllers\PelangganController;
-use App\Http\Controllers\DashboardController;// <-- 1. TAMBAHKAN IMPORT INI
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\BiodataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,11 +34,17 @@ Route::post('question/store', [QuestionController::class, 'store'])
 
 Route::get('/post/create', [PostController::class, 'create']);
 Route::post('/post', [PostController::class, 'store']);
-//pelanggan
+
+// ===== ROUTE PELANGGAN =====
+// Route::resource sudah otomatis membuat route index, create, store, show, edit, update, destroy.
+// Jadi kamu tidak perlu menulis route manual untuk create dan index lagi di bawahnya.
 Route::resource('pelanggan', PelangganController::class);
 
+// ===== ROUTE DASHBOARD =====
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::get('/admin/pelanggan/create', [PelangganController::class, 'create'])->name('pelanggan.create');
-
-Route::get('/admin/pelanggan', [PelangganController::class, 'index'])->name('pelanggan.index');
+// ===== ROUTE BIODATA (Diperbaiki) =====
+// Menambahkan parameters agar Laravel menggunakan 'biodata' bukan 'biodatum'
+Route::resource('biodata', BiodataController::class)->parameters([
+    'biodata' => 'biodata'
+]);
