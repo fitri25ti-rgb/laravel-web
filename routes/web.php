@@ -6,7 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\QuestionController; 
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\DashboardController;// <-- 1. TAMBAHKAN IMPORT INI
-
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,3 +41,9 @@ Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard'
 Route::get('/admin/pelanggan/create', [PelangganController::class, 'create'])->name('pelanggan.create');
 
 Route::get('/admin/pelanggan', [PelangganController::class, 'index'])->name('pelanggan.index');
+
+Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->middleware('auth')
+    ->name('auth.logout');
